@@ -13,7 +13,7 @@ class FinancialAnalysisToolSchema(BaseModel):
 
 
 class FinancialAnalysisTool(BaseTool):
-    name: str = "财务分析工具"
+    name: str = "Financial analysis tool"
     description: str = "深度分析A股公司财务报表，包括财务比率、趋势分析和同业对比"
     args_schema: Type[BaseModel] = FinancialAnalysisToolSchema
 

@@ -13,7 +13,7 @@ class AStockDataToolSchema(BaseModel):
 
 
 class AStockDataTool(BaseTool):
-    name: str = "股票数据获取工具"
+    name: str = "Stock data acquisition tool"
     description: str = "获取A股和港股的实时行情、历史数据、财务信息等，支持上交所、深交所和港股"
     args_schema: Type[BaseModel] = AStockDataToolSchema
 

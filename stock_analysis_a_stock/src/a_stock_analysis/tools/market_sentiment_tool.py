@@ -13,7 +13,7 @@ class MarketSentimentToolSchema(BaseModel):
 
 
 class MarketSentimentTool(BaseTool):
-    name: str = "市场情绪分析工具"
+    name: str = "Market sentiment analysis tool"
     description: str = "分析A股市场情绪，包括资金流向、新闻情绪和技术情绪"
     args_schema: Type[BaseModel] = MarketSentimentToolSchema
 

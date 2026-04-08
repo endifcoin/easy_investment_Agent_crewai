@@ -5,7 +5,7 @@ import re
 
 
 class CalculatorTool(BaseTool):
-    name: str = "计算器工具"
+    name: str = "calculator"
     description: str = (
         "用于执行各种数学计算，如加法、减法、乘法、除法等。"
         "输入应该是一个数学表达式，例如'200*7'或'5000/2*10'。"
