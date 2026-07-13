@@ -85,6 +85,45 @@ inputs = {
 - **深交所A股**：`000001.SZ`
 - **港股**：`00700.HK`
 
+### 打新底仓筛选器
+
+仓库提供一个独立的沪市主板“打新底仓”候选筛选脚本。默认使用 Baostock 做全市场股票池和 K 线数据源，自动筛选，不需要手工填写股票：
+
+```bash
+uv run python scripts/ipo_base_stock_screener.py
+```
+
+默认输出：
+
+- `outputs/ipo_base_stock_candidates.csv`
+- `outputs/ipo_base_stock_candidates.md`
+
+常用调试参数：
+
+```bash
+uv run python scripts/ipo_base_stock_screener.py --limit 20 --top 10
+```
+
+默认自动股票池是 `large_cap`：上证 50 + 沪深 300 中的沪市主板股票，适合先筛流动性较好的大盘底仓。需要扫描全部沪市主板时再使用：
+
+```bash
+uv run python scripts/ipo_base_stock_screener.py --universe all --top 80 --basket-size 12 --final-per-basket 2
+```
+
+如果全市场行情列表接口不稳定，可以先传入手工股票池，脚本会跳过股票列表接口，直接拉这些股票的 K 线：
+
+```bash
+uv run python scripts/ipo_base_stock_screener.py --codes 600000,601398,601988 --top 10
+```
+
+也可以显式切到 AKShare 备用模式：
+
+```bash
+uv run python scripts/ipo_base_stock_screener.py --provider akshare --top 10
+```
+
+筛选范围默认限定上交所主板代码 `600/601/603/605`，排除 ST/退市风险名称，并按 20 日成交额、120 日波动率、120 日最大回撤、市值和股息率做综合排序。默认 Baostock 路径会自动拉取指数成分/股票基础表，并逐只获取日 K、成交额、PE/PB、行业、分红、ROE、负债率和现金流质量字段。分篮子报告包含 `大盘核心`、`稳健底仓`、`高股息价值`、`金融低波`、`公用事业基建`、`低回撤观察` 6 个篮子；最终组合按每个篮子取 `--final-per-basket` 只，遇到重复代码会在该篮子内顺延。
+
 ## 🔧 自定义配置
 
 ### 切换AI模型
